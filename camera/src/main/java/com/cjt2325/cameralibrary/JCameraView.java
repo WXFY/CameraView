@@ -76,7 +76,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     public static final int BUTTON_STATE_ONLY_CAPTURE = 0x101;      //只能拍照
     public static final int BUTTON_STATE_ONLY_RECORDER = 0x102;     //只能录像
     public static final int BUTTON_STATE_BOTH = 0x103;              //两者都可以
-
+    boolean isAhead = false;
 
     //回调监听
     private JCameraListener jCameraLisenter;
@@ -175,6 +175,13 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         mSwitchCamera.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isAhead){
+                    mFlashLamp.setVisibility(VISIBLE);
+                }else {
+                    mFlashLamp.setVisibility(GONE);
+                }
+                isAhead = !isAhead;
+                CameraInterface.getInstance().setSwitchView(mSwitchCamera, mFlashLamp);
                 machine.swtich(mVideoView.getHolder(), screenProp);
             }
         });

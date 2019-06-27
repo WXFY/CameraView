@@ -60,7 +60,7 @@ public class CameraInterface implements Camera.PreviewCallback {
             mCameraInterface = null;
         }
     }
-
+    private Context context;
     private Camera mCamera;
     private Camera.Parameters mParams;
     private boolean isPreviewing = false;
@@ -115,6 +115,7 @@ public class CameraInterface implements Camera.PreviewCallback {
         this.mSwitchView = mSwitchView;
         this.mFlashLamp = mFlashLamp;
         if (mSwitchView != null) {
+            context = mSwitchView.getContext();
             cameraAngle = CameraParamUtil.getInstance().getCameraDisplayOrientation(mSwitchView.getContext(),
                     SELECTED_CAMERA);
         }
@@ -391,7 +392,7 @@ public class CameraInterface implements Camera.PreviewCallback {
                 mCamera.setParameters(mParams);
                 mParams = mCamera.getParameters();
                 mCamera.setPreviewDisplay(holder);  //SurfaceView
-                mCamera.setDisplayOrientation(cameraAngle);//浏览角度
+                mCamera.setDisplayOrientation(cameraAngle =  CameraParamUtil.getInstance().getCameraDisplayOrientation(context,SELECTED_CAMERA));//浏览角度
                 mCamera.setPreviewCallback(this); //每一帧回调
                 mCamera.startPreview();//启动浏览
                 isPreviewing = true;
